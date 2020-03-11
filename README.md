@@ -1,7 +1,7 @@
 # VolleyDemo
 A quick demo of the Volley Library for Android. Uses the [OMBD](http://www.omdbapi.com/) API. to fetch movie data. 
 
-This project searches for the movie "Toy Story 4". the url below shows how to concatenate a string to include an API_KEY defined as a private static String outside the onCreate() method. You will need your own API key here. 
+This project searches for the movie "Toy Story 4". The url below shows how to concatenate a string to include an API_KEY defined as a private static String outside the onCreate() method. You will need your own API key here. 
 
 ```
 
