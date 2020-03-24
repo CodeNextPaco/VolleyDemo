@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
                             String director = response.getString("Director");
 
 
-
-
-
-
-
                             /*******************************************************************************************************
                               The http://www.omdbapi.com/ database has the ratings stored in a JSON Object inside a JSON Array.
                               Rotten Tomatoes is the second object in the JSON Array - index 1.
