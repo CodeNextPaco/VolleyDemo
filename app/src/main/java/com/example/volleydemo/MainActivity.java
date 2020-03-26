@@ -3,6 +3,7 @@ package com.example.volleydemo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +23,11 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,13 +55,24 @@ public class MainActivity extends AppCompatActivity {
 
     private int randomMovieInt;
 
+    private String imdbCode; //we will need this one to store each movie
+
+    SharedPreferences sharedpreferences;
+
 
     private ImageView moviePosterIV;
-    private Movie aMovie;
+
+    //store the database "keys" as static constants
+    public static final String MY_MOVIE_PREFS = "mySavedMovies";
+    public static final String MOVIES_LIST_KEY = "movieList";
+
+
+    //using a List to save movies into Shared Prefs
+    public List<String> savedMoviesList;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         movieTitleTV = findViewById(R.id.movieTitleTV);
@@ -71,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         myFavesBtn = findViewById(R.id.favoritesBtn);
 
 
+        //addFavesBtn.setVisibility(View.INVISIBLE);
+
+
         getRandomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,12 +101,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
+                Log.d("addFavesBtn" , "adding movie to faves: " + imdbCode);
+
+
+
+                if(savedMoviesList.contains(imdbCode)){
+
+                    Toast.makeText(getApplicationContext(), "You already added this movie", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    Set<String> set = new HashSet<String>();
+                    savedMoviesList.add(imdbCode);
+                    set.addAll(savedMoviesList);
+                    editor.putStringSet(MOVIES_LIST_KEY, set);
+                    editor.commit();
+
+                }
+
             }
         });
 
         myFavesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.d("myFavs" , "loading...");
+
+                
 
             }
         });
@@ -99,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
         String url = "https://www.omdbapi.com/?apikey="+ API_KEY+"&t=Toy+Story+4&y=2019";
 
         fetchData(url);
+
+        //shared prefs:
+        savedMoviesList = new ArrayList<String>();
+
+        loadPrefs(); //load the preferences
     }
 
 
@@ -121,6 +170,21 @@ public class MainActivity extends AppCompatActivity {
                             movieDirector = response.getString("Director");
                             moviePlot = response.getString("Plot");
                             moviePosterURL = response.getString("Poster");
+
+                            /*****************************************************
+                             *
+                             *
+                             * We will use the imdbID to store our movies and fetch them using just this code.
+                             *
+                             *************************************************/
+
+                            if(response.getString("imdbID" )!=null){
+                                imdbCode = response.getString("imdbID");
+
+                                Log.d("fetchData" ,"imdb code : " + imdbCode);
+
+                            }
+
 
                             if(moviePosterURL.length() < 5 ){
 
@@ -153,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             moviePlotTV.setText(moviePlot);
+
 
                         }catch(JSONException e){
 
@@ -213,5 +278,40 @@ public class MainActivity extends AppCompatActivity {
             fetchData(moviePosterURL); //send it off and see if it works. If error, fetchData() will call this again
 
     }
+
+
+    private  void loadPrefs(){
+
+        Log.d("loadPrefs", "Loading... "  );
+
+        sharedpreferences = getSharedPreferences(MY_MOVIE_PREFS, Context.MODE_PRIVATE); //get the shared preferences
+
+        if(sharedpreferences.contains(MOVIES_LIST_KEY)){
+
+
+            //******** Create a new Set for our saved data and pass its items to our List.
+            Set<String> set = sharedpreferences.getStringSet(MOVIES_LIST_KEY, null);
+
+            for (String item : set){
+
+                savedMoviesList.add(item);
+                Log.d("loadPrefs", ""+ set);
+
+            }
+
+            Log.d("loadPrefs", ""+ set);
+
+        }
+
+
+
+
+
+
+    }
+
+
+
+
 
 }
