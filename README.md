@@ -1,15 +1,24 @@
 # VolleyDemo
 A quick demo of the Volley Library for Android. Uses the [OMBD](http://www.omdbapi.com/) API. to fetch movie data. 
+Branch1 has the following improvements:
 
-This project searches for the movie "Toy Story 4". The url below shows how to concatenate a string to include an API_KEY defined as a private static String outside the onCreate() method. You will need your own API key here. 
-
-```
-
-        String url = "https://www.omdbapi.com/?apikey="+ API_KEY+"&t=Toy+Story+4&y=2019";
+1. Added the Picasso  dependency to the Gradle app file. Picasso allows for setting ImageView content from external URLs.
 
 ```
-Todo: 
-1. Finish the fetchData() method to handle different requests.
-2. Add some UI to make it more dynamic, for example an EditText to submit any move title, or an ImageView to display the movie poster. 
-3. Add a submit button to call the method.
+        implementation 'com.squareup.picasso:picasso:2.71828'
+```
+
+
+2. Added more UI to hold incoming data
+3. Added UI to enter movie title and year, and a submit button.
+4. Created a "Random Movie" button to get a random movie using IMDB codes.
+5. Declared variables :
+```
+        private String moviePosterURL;
+        private String movieTitle;
+        private String movieYear;
+```
+
+         
+
  
