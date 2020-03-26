@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
         getRandomBtn =findViewById(R.id.getRandomBtn);
         moviePosterIV = findViewById(R.id.moviePosterIV);
         moviePlotTV = findViewById(R.id.storyTV);
-
+        addFavesBtn = findViewById(R.id.addFavesBtn);
+        myFavesBtn = findViewById(R.id.favoritesBtn);
 
 
         getRandomBtn.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +78,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addFavesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        myFavesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
         requestQueue = Volley.newRequestQueue(this);

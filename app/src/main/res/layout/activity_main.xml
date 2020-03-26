@@ -153,7 +153,28 @@
                 android:layout_weight="0"
                 android:text="plot..." />
 
+            <Button
+                android:id="@+id/addFavesBtn"
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:background="#FF8A80"
+                android:text="+ Favs" />
+
+            <Button
+                android:id="@+id/favoritesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:background="#CCFF90"
+                android:text="My Faves"
+                android:textColor="#46523B"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
