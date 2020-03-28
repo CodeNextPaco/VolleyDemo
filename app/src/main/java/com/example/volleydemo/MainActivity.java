@@ -3,6 +3,7 @@ package com.example.volleydemo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,7 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
 
-    RequestQueue requestQueue;  //STEP 1
+    RequestQueue requestQueue;
     private final String API_KEY = "388d5f18";
 
     private String moviePosterURL;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //using a List to save movies into Shared Prefs
-    public List<String> savedMoviesList;
+    public ArrayList<String> savedMoviesList;
 
 
     @Override
@@ -131,7 +132,15 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("myFavs" , "loading...");
 
-                
+                Intent intent = new Intent(getApplicationContext(), FavoriteMovies.class);
+
+                intent.putExtra("movies", "Songs are here!");
+
+                intent.putStringArrayListExtra("movies", savedMoviesList);
+
+                startActivity(intent);
+
+
 
             }
         });
